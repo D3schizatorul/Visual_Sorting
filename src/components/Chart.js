@@ -9,7 +9,7 @@ const Chart = (props) => {
             className={`bar-${value}`}
             style={{ gridRowStart: 100 - value }}
             key={value}
-          >{value}</div>
+          ></div>
         ))}
       </div>
     </div>

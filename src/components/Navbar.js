@@ -6,6 +6,8 @@ import {
   Button,
   Menu,
   MenuButton,
+  MenuList,
+  MenuItem,
   useDisclosure,
   useColorModeValue,
   Stack,
@@ -20,12 +22,18 @@ import {
   CloseIcon,
   MoonIcon,
   UpDownIcon,
+  ChevronDownIcon,
 } from "@chakra-ui/icons";
 import { MergeSort, BubbleSort, QuickSort, HeapSort } from "../algorithms";
+import { ReactComponent as MergeIcon } from "../assets/merge.svg";
+import { ReactComponent as QuickIcon } from "../assets/clock.svg";
+import { ReactComponent as HeapIcon } from "../assets/heap.svg";
+import { ReactComponent as BubbleIcon } from "../assets/bubbles.svg";
 
 export default function Navbar(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [activeMenu, setActiveMenu] = useState(true);
+  const [dropdownMenu, setDropdownMenu] = useState(false);
   const [screenSize, setScreenSize] = useState(undefined);
 
   useEffect(() => {
@@ -41,7 +49,32 @@ export default function Navbar(props) {
     } else {
       setActiveMenu(true);
     }
+    if (screenSize <= 1010) {
+      setDropdownMenu(true);
+    } else {
+      setDropdownMenu(false);
+    }
   }, [screenSize]);
+
+  async function sortingDone(arr) {
+    for (let i = 0; i <= arr.length - 1; i++) {
+      const sound = new Audio("sticks.wav");
+      sound.volume = 0.2;
+      sound.play();
+      document.querySelector(`.bar-${arr[i]}`).style.background = "green";
+      await sleep(100);
+    }
+    await sleep(500);
+    for (let i = 0; i <= arr.length - 1; i++) {
+      document.querySelector(`.bar-${arr[i]}`).style.background = "#808080";
+    }
+  }
+
+  function sleep(delay) {
+    return new Promise((resolve) => {
+      setTimeout(resolve, delay);
+    });
+  }
 
   return (
     <>
@@ -72,30 +105,86 @@ export default function Navbar(props) {
               </Box>
               <Box className="sort-container">
                 <Menu>
-                  <MenuButton
-                    as={Button}
-                    onClick={() => MergeSort(props.arr, 0, props.arr_size - 1)}
-                  >
-                    Merge Sort
-                  </MenuButton>
-                  <MenuButton
-                    as={Button}
-                    onClick={() => BubbleSort(props.arr, props.arr_size - 1)}
-                  >
-                    Bubble Sort
-                  </MenuButton>
-                  <MenuButton
-                    as={Button}
-                    onClick={() => HeapSort(props.arr)}
-                  >
-                    Heap Sort
-                  </MenuButton>
-                  <MenuButton
-                    as={Button}
-                    onClick={() => QuickSort(props.arr, 0, props.arr_size - 1)}
-                  >
-                    Quick Sort
-                  </MenuButton>
+                  {!dropdownMenu ? (
+                    <>
+                      <MenuButton
+                        as={Button}
+                        onClick={async function () {
+                          await MergeSort(props.arr, 0, props.arr_size - 1);
+                          sortingDone(props.arr);
+                        }}
+                      >
+                        Merge Sort
+                      </MenuButton>
+                      <MenuButton
+                        as={Button}
+                        onClick={async function () {
+                          await BubbleSort(props.arr, props.arr_size - 1);
+                          sortingDone(props.arr);
+                        }}
+                      >
+                        Bubble Sort
+                      </MenuButton>
+                      <MenuButton
+                        as={Button}
+                        onClick={async function () {
+                          HeapSort(props.arr);
+                          sortingDone(props.arr);
+                        }}
+                      >
+                        Heap Sort
+                      </MenuButton>
+                      <MenuButton
+                        as={Button}
+                        onClick={async function () {
+                          await QuickSort(props.arr, 0, props.arr_size - 1);
+                          sortingDone(props.arr);
+                        }}
+                      >
+                        Quick Sort
+                      </MenuButton>
+                    </>
+                  ) : (
+                    <>
+                      <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+                        Sorting Algorithms
+                      </MenuButton>
+                      <MenuList alignItems={"center"}>
+                        <MenuItem
+                          onClick={async function () {
+                            await MergeSort(props.arr, 0, props.arr_size - 1);
+                            sortingDone(props.arr);
+                          }}
+                        >
+                          <MergeIcon className="sort-img" /> Merge Sort
+                        </MenuItem>
+                        <MenuItem
+                          onClick={async function () {
+                            await BubbleSort(props.arr, props.arr_size - 1);
+                            sortingDone(props.arr);
+                          }}
+                        >
+                          <BubbleIcon className="sort-img" /> Bubble Sort
+                        </MenuItem>
+                        <MenuItem
+                          onClick={async function () {
+                            HeapSort(props.arr);
+                            sortingDone(props.arr);
+                          }}
+                        >
+                          <HeapIcon className="sort-img" /> Heap Sort
+                        </MenuItem>
+                        <MenuItem
+                          onClick={async function () {
+                            await QuickSort(props.arr, 0, props.arr_size - 1);
+                            sortingDone(props.arr);
+                          }}
+                        >
+                          <QuickIcon className="sort-img" /> Quick Sort
+                        </MenuItem>
+                      </MenuList>
+                    </>
+                  )}
                 </Menu>
               </Box>
               <Box className="slider-container">

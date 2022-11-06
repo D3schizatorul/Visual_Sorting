@@ -63,15 +63,13 @@ async function HeapSort(arr) {
   // Continue heap sorting until we have one element left
   while (lastElement >= 0) {
     document.querySelector(`.bar-${arr[0]}`).style.background = "purple";
-    document.querySelector(`.bar-${arr[lastElement]}`).style.background =
-      "yellow";
+    document.querySelector(`.bar-${arr[lastElement]}`).style.background = "yellow";
     document.querySelector(`.bar-${arr[0]}`).style.order = `${lastElement}`;
     document.querySelector(`.bar-${arr[lastElement]}`).style.order = `${0}`;
     [arr[0], arr[lastElement]] = [arr[lastElement], arr[0]];
     await sleep(sortSpeed);
     document.querySelector(`.bar-${arr[0]}`).style.background = "#808080";
-    document.querySelector(`.bar-${arr[lastElement]}`).style.background =
-      "#808080";
+    document.querySelector(`.bar-${arr[lastElement]}`).style.background = "#808080";
     await heapify(arr, 0, lastElement);
     lastElement -= 1;
   }

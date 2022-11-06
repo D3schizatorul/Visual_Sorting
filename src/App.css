@@ -55,3 +55,9 @@ body {
   background-color: #808080;
   grid-row-end: 101;
 }
+
+.sort-img {
+  width: 25px;
+  height: 25px;
+  margin-right: 5px;
+}

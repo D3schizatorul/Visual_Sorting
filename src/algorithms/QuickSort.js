@@ -43,7 +43,6 @@ async function QuickSort(arr, start, end) {
   // Recursively apply the same logic to the left and right subarrays
   await QuickSort(arr, start, pivotIndex - 1);
   await QuickSort(arr, pivotIndex + 1, end);
-  console.log(arr);
 }
 
 export default QuickSort;
