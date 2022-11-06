@@ -50,6 +50,9 @@ function App() {
           generateArray={generateArray}
           removeOrder={removeOrder}
         />
+        <span id="sort-speed" className="hidden-speed">
+          {sortSpeed}
+        </span>
       </GridItem>
 
       <GridItem bg="#ffffff" area={"main"}>

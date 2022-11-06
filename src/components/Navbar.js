@@ -49,7 +49,7 @@ export default function Navbar(props) {
     } else {
       setActiveMenu(true);
     }
-    if (screenSize <= 1010) {
+    if (screenSize <= 1015 && screenSize >= 767) {
       setDropdownMenu(true);
     } else {
       setDropdownMenu(false);
@@ -62,7 +62,7 @@ export default function Navbar(props) {
       sound.volume = 0.2;
       sound.play();
       document.querySelector(`.bar-${arr[i]}`).style.background = "green";
-      await sleep(100);
+      await sleep(50);
     }
     await sleep(500);
     for (let i = 0; i <= arr.length - 1; i++) {
@@ -128,7 +128,7 @@ export default function Navbar(props) {
                       <MenuButton
                         as={Button}
                         onClick={async function () {
-                          HeapSort(props.arr);
+                          await HeapSort(props.arr);
                           sortingDone(props.arr);
                         }}
                       >
@@ -168,7 +168,7 @@ export default function Navbar(props) {
                         </MenuItem>
                         <MenuItem
                           onClick={async function () {
-                            HeapSort(props.arr);
+                            await HeapSort(props.arr);
                             sortingDone(props.arr);
                           }}
                         >
@@ -190,7 +190,7 @@ export default function Navbar(props) {
               <Box className="slider-container">
                 <Box width={120}>
                   <p>
-                    Sleep Time: <span id="sort-speed">{props.sortSpeed}</span>
+                    Sleep Time: <span>{props.sortSpeed}</span>
                   </p>
                   <Slider
                     max={500}
@@ -225,7 +225,50 @@ export default function Navbar(props) {
                 </Box>
               </Box>
             </>
-          ) : null}
+          ) : (
+            <>
+              <Menu>
+                <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+                  Sorting Algorithms
+                </MenuButton>
+                <MenuList alignItems={"center"}>
+                  <MenuItem
+                    onClick={async function () {
+                      await MergeSort(props.arr, 0, props.arr_size - 1);
+                      sortingDone(props.arr);
+                    }}
+                  >
+                    <MergeIcon className="sort-img" /> Merge Sort
+                  </MenuItem>
+                  <MenuItem
+                    onClick={async function () {
+                      await BubbleSort(props.arr, props.arr_size - 1);
+                      sortingDone(props.arr);
+                    }}
+                  >
+                    <BubbleIcon className="sort-img" /> Bubble Sort
+                  </MenuItem>
+                  <MenuItem
+                    onClick={async function () {
+                      await HeapSort(props.arr);
+                      sortingDone(props.arr);
+                    }}
+                  >
+                    <HeapIcon className="sort-img" /> Heap Sort
+                  </MenuItem>
+                  <MenuItem
+                    onClick={async function () {
+                      await QuickSort(props.arr, 0, props.arr_size - 1);
+                      sortingDone(props.arr);
+                    }}
+                  >
+                    <QuickIcon className="sort-img" /> Quick Sort
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+              <Image boxSize="30px" src="logo.png" alt="logo" />
+            </>
+          )}
         </Flex>
 
         {isOpen ? (
@@ -237,24 +280,13 @@ export default function Navbar(props) {
                   onClick={() => {
                     props.removeOrder();
                     props.generateArray(props.arrayRange);
+                    onClose();
                   }}
                 >
                   Generate New Array
                 </MenuButton>
-                <MenuButton
-                  as={Button}
-                  onClick={() => MergeSort(props.arr, 0, props.arr_size - 1)}
-                >
-                  Merge Sort
-                </MenuButton>
-                <MenuButton
-                  as={Button}
-                  onClick={() => BubbleSort(props.arr, props.arr_size - 1)}
-                >
-                  Bubble Sort
-                </MenuButton>
               </Menu>
-              <Box width={120}>
+              <Box width={120} alignSelf={'center'}>
                 Sleep Time: <span id="sort-speed">{props.sortSpeed}</span>
                 <Slider
                   max={500}
@@ -270,7 +302,7 @@ export default function Navbar(props) {
                   </SliderThumb>
                 </Slider>
               </Box>
-              <Box width={120}>
+              <Box width={120} alignSelf={'center'}>
                 Elements: {props.arrayRange}
                 <Slider
                   min={10}

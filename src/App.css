@@ -61,3 +61,11 @@ body {
   height: 25px;
   margin-right: 5px;
 }
+
+.hidden-speed {
+  color: #fff;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
