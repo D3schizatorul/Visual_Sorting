@@ -32,29 +32,22 @@ import { ReactComponent as BubbleIcon } from "../assets/bubbles.svg";
 
 export default function Navbar(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [activeMenu, setActiveMenu] = useState(true);
+  const [activeMenu, setActiveMenu] = useState(false);
   const [dropdownMenu, setDropdownMenu] = useState(false);
-  const [screenSize, setScreenSize] = useState(undefined);
 
   useEffect(() => {
-    const handleResize = () => setScreenSize(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    handleResize();
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  useEffect(() => {
-    if (screenSize <= 767) {
+    console.log(props.screenSize)
+    if (props.screenSize <= 767) {
       setActiveMenu(false);
     } else {
       setActiveMenu(true);
     }
-    if (screenSize <= 1015 && screenSize >= 767) {
+    if (props.screenSize <= 1015 && props.screenSize >= 767) {
       setDropdownMenu(true);
     } else {
       setDropdownMenu(false);
     }
-  }, [screenSize]);
+  }, [props.screenSize]);
 
   async function sortingDone(arr) {
     for (let i = 0; i <= arr.length - 1; i++) {

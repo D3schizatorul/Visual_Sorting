@@ -9,6 +9,14 @@ function App() {
   const [randomArray, setRandomArray] = useState([]);
   const [arrayRange, setArrayRange] = useState(25);
   const [sortSpeed, setSortSpeed] = useState(200);
+  const [screenSize, setScreenSize] = useState(undefined);
+
+  useEffect(() => {
+    const handleResize = () => setScreenSize(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const generateArray = (size) => {
     let randomSet = new Set();
@@ -41,6 +49,7 @@ function App() {
     >
       <GridItem zIndex={1} area={"header"}>
         <Navbar
+          screenSize={screenSize}
           arr={arr}
           arr_size={arr_size}
           arrayRange={arrayRange}

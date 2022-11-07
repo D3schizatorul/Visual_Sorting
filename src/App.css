@@ -45,7 +45,7 @@ body {
   grid-template-rows: repeat(100, 1fr);
   grid-column-gap: 1px;
   height: 91vh;
-  width: 80vw;
+  width: 80%;
   padding: 5px 10px;
 }
 
