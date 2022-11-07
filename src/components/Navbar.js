@@ -55,7 +55,7 @@ export default function Navbar(props) {
       sound.volume = 0.2;
       sound.play();
       document.querySelector(`.bar-${arr[i]}`).style.background = "green";
-      await sleep(50);
+      await sleep(100);
     }
     await sleep(500);
     for (let i = 0; i <= arr.length - 1; i++) {
